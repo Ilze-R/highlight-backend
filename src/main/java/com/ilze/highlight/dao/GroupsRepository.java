@@ -16,10 +16,9 @@ public interface GroupsRepository extends JpaRepository<Groups, Long> {
 
     Page<Groups> findByGroupNameContaining(@RequestParam("group_name") String group_name, Pageable pageable);
 
-    Page<Groups> findByStrict(@RequestParam("strict") boolean strict, Pageable pageable);
+//Page <Groups> findByClosedAndStrict(@RequestParam ("closed", "strict") boolean closed, boolean strict, Pageable pageable);
 
-    Page<Groups> findByStrictAndClosed(@RequestParam ("closed") boolean closed, @RequestParam ("strict") boolean strict, Pageable pageable);
-
+//  LV4798131
 
 
 
