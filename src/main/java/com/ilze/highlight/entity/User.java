@@ -1,69 +1,63 @@
 package com.ilze.highlight.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
+@Data
 @Entity
-@Getter
-@Setter
+@Table(name = "users")
 public class User {
 
   @Id
-  private String userName;
-  private String userFirstName;
-  private String userLastName;
-  private String userPassword;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinTable(name = "USER_ROLE",
-  joinColumns = {
-    @JoinColumn(name = "USER_ID")
-  },
-  inverseJoinColumns = {
-    @JoinColumn(name = "ROLE_ID")
-  })
-  private Set<Role> role;
+  @Column(name ="username", unique = true, nullable = false, length = 100)
+  private String username;
 
-//  public String getUserName() {
-//    return userName;
-//  }
-//
-//  public void setUserName(String userName) {
-//    this.userName = userName;
-//  }
-//
-//  public String getUserFirstName() {
-//    return userFirstName;
-//  }
-//
-//  public void setUserFirstName(String userFirstName) {
-//    this.userFirstName = userFirstName;
-//  }
-//
-//  public String getUserLastName() {
-//    return userLastName;
-//  }
-//
-//  public void setUserLastName(String userLastName) {
-//    this.userLastName = userLastName;
-//  }
-//
-//  public String getUserPassword() {
-//    return userPassword;
-//  }
-//
-//  public void setUserPassword(String userPassword) {
-//    this.userPassword = userPassword;
-//  }
-//
-//  public Set<Role> getRole() {
-//    return role;
-//  }
-//
-//  public void setRole(Set<Role> role) {
-//    this.role = role;
-//  }
+  @Column(name = "password", nullable = false)
+  private String password;
+
+  @Column(name = "name", nullable = false)
+  private String name;
+
+  @Column(name = "create_time", nullable = false)
+  private LocalDateTime createTime;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "role", nullable = false)
+  private Role role;
+
+  @Transient
+  private String accessToken;
+
+  @Transient
+  private String refreshToken;
 }
+
+////UserTry
+//@Entity
+//@Getter
+//@Setter
+//public class User {
+//
+//  @Id
+//  private String userName;
+//  private String userFirstName;
+//  private String userLastName;
+//  private String userPassword;
+//
+//  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//  @JoinTable(name = "USER_ROLE",
+//  joinColumns = {
+//    @JoinColumn(name = "USER_ID")
+//  },
+//  inverseJoinColumns = {
+//    @JoinColumn(name = "ROLE_ID")
+//  })
+//  private Set<Role> role;
+//
+//}

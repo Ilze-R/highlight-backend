@@ -1,42 +1,39 @@
 package com.ilze.highlight.controller;
 
-import com.ilze.highlight.entity.User;
+import com.ilze.highlight.entity.Role;
+import com.ilze.highlight.security.UserPrincipal;
 import com.ilze.highlight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
-
 @RestController
+@RequestMapping("api/user") // pre-path
 public class UserController {
 
   @Autowired
   private UserService userService;
 
-  @PostConstruct
-  public void initRolesAndUsers() {
-    userService.initRolesAndUser();
+  @PutMapping("change/{role}") // api/user/change/{role}
+  public ResponseEntity<?> changeRole(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Role role){
+
+    userService.changeRole(role, userPrincipal.getUsername());
+
+    return ResponseEntity.ok(true);
   }
 
-  @PostMapping({"/registerNewUser"})
-  public User registerNewUser(@RequestBody User user) {
-    return userService.registerNewUser(user);
-  }
 
-  @GetMapping({"/forAdmin"})
-  @PreAuthorize("hasRole('Admin')")
-  public String forAdmin() {
-    return "This URL is only accessible to admin";
 
-  }
 
-  @GetMapping({"/forUser"})
-  @PreAuthorize("hasRole('User')")
-  public String forUser(){
-    return "This URL os only accessible to the user";
-  }
+
+
+
+
+
+
+
 }
