@@ -18,7 +18,7 @@ public interface GroupsRepository extends JpaRepository<Groups, Long> {
 
 //Page <Groups> findByClosedAndStrict(@RequestParam ("closed", "strict") boolean closed, boolean strict, Pageable pageable);
 
-//  LV4798131
+
 
 
 
