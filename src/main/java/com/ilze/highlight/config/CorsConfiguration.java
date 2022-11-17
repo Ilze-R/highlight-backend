@@ -16,7 +16,7 @@ public class CorsConfiguration {
   private static final String PUT = "PUT";
 
   @Bean
-  public WebMvcConfigurer corsConfigurer(){
+  public WebMvcConfigurer corsConfigurer() {
     return new WebMvcConfigurer() {
 
       @Override

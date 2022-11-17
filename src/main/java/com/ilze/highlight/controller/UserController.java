@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/user") // pre-path
 public class UserController {
-
   @Autowired
   private UserService userService;
+
 
   @PutMapping("change/{role}") // api/user/change/{role}
   public ResponseEntity<?> changeRole(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Role role){

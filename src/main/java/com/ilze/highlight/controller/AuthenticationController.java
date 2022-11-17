@@ -23,9 +23,9 @@ public class AuthenticationController {
   private JwtRefreshTokenService jwtRefreshTokenService;
 
   @PostMapping("sign-up") //api/authentication/sign-up
-  public ResponseEntity<?> signUp(@RequestBody User user){
+  public ResponseEntity<?> signUp(@RequestBody User user) {
 
-    if(userService.findByUsername(user.getUsername()).isPresent()){
+    if (userService.findByUsername(user.getUsername()).isPresent()) {
       return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
     return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);

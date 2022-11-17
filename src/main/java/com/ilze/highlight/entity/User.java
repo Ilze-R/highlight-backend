@@ -1,13 +1,18 @@
 package com.ilze.highlight.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
+//@AllArgsConstructor
+//@RequiredArgsConstructor
 @Table(name = "users")
 public class User {
 
@@ -37,6 +42,34 @@ public class User {
 
   @Transient
   private String refreshToken;
+
+
+  @ManyToMany(fetch = FetchType.LAZY,
+    cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+      CascadeType.DETACH, CascadeType.REFRESH})
+
+  @JoinTable(
+    name = "groups_x_user",
+    joinColumns = @JoinColumn(name = "users_id"),
+    inverseJoinColumns = @JoinColumn(name = "groups_id")
+  )
+  private List<Groups> groupName;
+
+
+//  @ManyToMany(
+//    fetch = FetchType.LAZY,
+//    cascade = {
+//      CascadeType.PERSIST,
+//      CascadeType.MERGE,
+//      CascadeType.DETACH,
+//      CascadeType.REFRESH})
+//
+//  @JoinTable(
+//    name = "groups_x_user",
+//    joinColumns = @JoinColumn(name = "user_id"),
+//    inverseJoinColumns = @JoinColumn(name = "group_id"))
+//
+//    private List<Groups> groupName;
 }
 
 ////UserTry

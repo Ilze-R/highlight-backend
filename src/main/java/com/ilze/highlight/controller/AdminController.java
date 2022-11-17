@@ -15,7 +15,7 @@ public class AdminController {
   private UserService userService;
 
   @GetMapping("all") // api/admin/all
-  public ResponseEntity<?> findAllUsers(){
+  public ResponseEntity<?> findAllUsers() {
 
     return ResponseEntity.ok(userService.findAllUsers());
   }
