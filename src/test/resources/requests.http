@@ -26,5 +26,9 @@ Content-Type: application/json
   client.global.set("refreshToken", response.body.refreshToken);
 %}
 
+### AdminController (ADMIN is allowed, USER is denied)
+GET http://localhost:8080/api/admin/all
+Authorization: Bearer {{accessToken}}
+
 
 
