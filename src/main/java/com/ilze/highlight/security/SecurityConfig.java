@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -52,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   http.authorizeRequests()
     .antMatchers("/api/authentication/**").permitAll()//login and register pre-path
     .antMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
-    .antMatchers("api/groups/**").permitAll()
+    .antMatchers("api/groups/**").permitAll() //todo fix url
     .anyRequest().authenticated();
 
   http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -63,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder();
   }
 
+  // TODO: 17.11.2022 exclude duplication with config.CorsConfiguration
   public WebMvcConfigurer corsConfigurer(){
     return new WebMvcConfigurer() {
 
