@@ -1,0 +1,40 @@
+### Sign In as ADMIN
+POST http://localhost:8080/api/authentication/sign-in
+Content-Type: application/json
+
+{
+  "username": "admin1.name",
+  "password": "admin1.pass"
+}
+
+> {%
+  client.global.set("accessToken", response.body.accessToken);
+  client.global.set("refreshToken", response.body.refreshToken);
+%}
+
+### Sign In as USER
+POST http://localhost:8080/api/authentication/sign-in
+Content-Type: application/json
+
+{
+  "username": "user1.name",
+  "password": "user1.pass"
+}
+
+> {%
+  client.global.set("accessToken", response.body.accessToken);
+  client.global.set("refreshToken", response.body.refreshToken);
+%}
+
+### AdminController (ADMIN is allowed, USER is denied)
+GET http://localhost:8080/api/admin/all
+Authorization: Bearer {{accessToken}}
+
+### GroupsController - works without authentication - because of `antMatchers("/api/groups/**").permitAll()`
+GET http://localhost:8080/api/groups/all-groups
+#Authorization: Bearer {{accessToken}}
+
+
+
+
+

@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.31
+    ports:
+      - '23306:3306'
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_USER: highlight
+      MYSQL_PASSWORD: highlight
+      MYSQL_DATABASE: highlight
+    volumes:
+    - highlight-db-data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '9090:8080'
+
+volumes:
+  highlight-db-data:
+
