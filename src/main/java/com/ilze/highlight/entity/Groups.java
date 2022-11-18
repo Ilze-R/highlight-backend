@@ -1,8 +1,7 @@
 package com.ilze.highlight.entity;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -39,6 +38,7 @@ public class Groups {
   private LocalDateTime createTime;
 
 
+  @JsonIgnore
   @ManyToMany(
     fetch = FetchType.LAZY,
     cascade = {
