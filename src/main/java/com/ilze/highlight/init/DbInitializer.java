@@ -63,7 +63,7 @@ public class DbInitializer implements CommandLineRunner {
         admin1.setPassword("admin1.pass");
         admin1.setRole(Role.ADMIN);
         admin1.setCreateTime(LocalDateTime.now());
-        admin1.setGroupName(List.of(groups1, groups2));
+//        admin1.setGroupName(List.of(groups1, groups2));
 
         var user1 = new User();
         user1.setUsername("user1.name");
@@ -71,7 +71,7 @@ public class DbInitializer implements CommandLineRunner {
         user1.setPassword("user1.pass");
         user1.setRole(Role.USER);
         user1.setCreateTime(LocalDateTime.now());
-        user1.setGroupName(List.of(groups2));
+//        user1.setGroupName(List.of(groups2));
 
         List<User> mockUsers = List.of(admin1, user1);
         mockUsers.forEach(userService::saveUser);

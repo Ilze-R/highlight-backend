@@ -11,5 +11,8 @@ public interface GroupsService {
 
   Optional<Groups> findByGroupName(String groupName);
 
-//  List<Groups> findAllGroups();
+  List<Groups> getGroupDetails (Long id);
+
+  void deleteGroup(Long id);
+
 }

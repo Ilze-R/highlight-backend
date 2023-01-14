@@ -1,19 +1,28 @@
 package com.ilze.highlight.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
+//@Data
 @Entity
-//@AllArgsConstructor
+@AllArgsConstructor
 //@RequiredArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Table(name = "users")
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class,
+  property = "id")
 public class User {
 
   @Id
@@ -21,7 +30,7 @@ public class User {
   @Column(name = "id")
   private Long id;
 
-  @Column(name ="username", unique = true, nullable = false, length = 100)
+  @Column(name = "username", unique = true, nullable = false, length = 100)
   private String username;
 
   @Column(name = "password", nullable = false)
@@ -45,32 +54,41 @@ public class User {
 
 
   @ManyToMany(fetch = FetchType.LAZY,
-    cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-      CascadeType.DETACH, CascadeType.REFRESH})
+    cascade = {
+      CascadeType.PERSIST,
+      CascadeType.MERGE,
+      CascadeType.DETACH,
+      CascadeType.REFRESH
+    })
+  @JoinTable(name = "groups_x_user",
+    joinColumns = { @JoinColumn(name = "users_id") },
+    inverseJoinColumns = {@JoinColumn(name = "groups_id")})
+  private Set<Groups> assignedGroups = new HashSet<>();
 
-  @JoinTable(
-    name = "groups_x_user",
-    joinColumns = @JoinColumn(name = "users_id"),
-    inverseJoinColumns = @JoinColumn(name = "groups_id")
-  )
-  private List<Groups> groupName;
+
+  public Set<Groups> getGroups(){
+    return assignedGroups;
+  }
+
+  public void setGroups(Set<Groups> groups){
+    this.assignedGroups = groups;
+  }
+
+  public void addGroup(Groups group) {
+    this.assignedGroups.add(group);
+    group.getUsers().add(this);
+  }
+
+  public void removeGroup(long id){
+    Groups group = this.assignedGroups.stream().filter(g ->
+      g.getId() == id).findFirst().orElse(null);
+    if(group != null){
+      this.assignedGroups.remove(group);
+      group.getUsers().remove(this);
+    }
+  }
 
 
-//  @ManyToMany(
-//    fetch = FetchType.LAZY,
-//    cascade = {
-//      CascadeType.PERSIST,
-//      CascadeType.MERGE,
-//      CascadeType.DETACH,
-//      CascadeType.REFRESH})
-//
-//  @JoinTable(
-//    name = "groups_x_user",
-//    joinColumns = @JoinColumn(name = "user_id"),
-//    inverseJoinColumns = @JoinColumn(name = "group_id"))
-//
-//    private List<Groups> groupName;
-}
 
 ////UserTry
 //@Entity
@@ -94,4 +112,4 @@ public class User {
 //  })
 //  private Set<Role> role;
 //
-//}
+}

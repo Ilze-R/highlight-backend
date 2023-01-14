@@ -1,17 +1,28 @@
 package com.ilze.highlight.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+//@Data
 @Entity
-//@AllArgsConstructor
+@AllArgsConstructor
 //@RequiredArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Table(name = "group_collection")
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class,
+  property = "id")
 public class Groups {
 
   @Id
@@ -34,24 +45,34 @@ public class Groups {
   @Column(name ="description", length = 300)
   private String description;
 
-  @Column(name = "create_time", nullable = false)
+  @Column(name = "create_time")
   private LocalDateTime createTime;
 
 
-  @JsonIgnore
-  @ManyToMany(
-    fetch = FetchType.LAZY,
-    cascade = {
-      CascadeType.PERSIST,
-      CascadeType.MERGE,
-      CascadeType.DETACH,
-      CascadeType.REFRESH})
-//    , mappedBy = "groupName")
 
-  @JoinTable(
-    name = "groups_x_user",
-    joinColumns = @JoinColumn(name = "groups_id"),
-    inverseJoinColumns = @JoinColumn(name = "users_id"))
+  @ManyToMany(fetch = FetchType.LAZY,
+  cascade = {
+    CascadeType.PERSIST,
+    CascadeType.MERGE,
+    CascadeType.DETACH,
+    CascadeType.REFRESH
+  },
+  mappedBy = "assignedGroups")
+  private Set<User> usersSet = new HashSet<>();
 
-  private List<User> username;
+
+  public Set<User> getUsers() {
+    return usersSet;
+  }
+
+  public void setUsers(Set<User> usersSet) {
+    this.usersSet = usersSet;
+  }
+
+  @PrePersist
+  public void prePersist(){
+    createTime = LocalDateTime.now();
+  }
+
+
 }
