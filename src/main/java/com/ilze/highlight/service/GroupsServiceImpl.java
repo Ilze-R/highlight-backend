@@ -1,7 +1,7 @@
 package com.ilze.highlight.service;
 
 
-import com.ilze.highlight.dao.GroupsRepository;
+import com.ilze.highlight.repositories.GroupsRepository;
 import com.ilze.highlight.entity.Groups;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
