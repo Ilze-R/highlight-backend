@@ -1,4 +1,4 @@
-package com.ilze.highlight.dao;
+package com.ilze.highlight.repositories;
 import com.ilze.highlight.entity.Groups;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

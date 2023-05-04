@@ -1,19 +1,17 @@
 package com.ilze.highlight.controller;
 
-import com.ilze.highlight.dao.GroupsRepository;
-import com.ilze.highlight.dao.UserRepository;
+import com.ilze.highlight.repositories.GroupsRepository;
+import com.ilze.highlight.repositories.UserRepository;
 import com.ilze.highlight.entity.Groups;
 import com.ilze.highlight.entity.User;
 import com.ilze.highlight.service.GroupsService;
 import com.ilze.highlight.service.UserService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.Subject;
 import java.util.List;
 
 

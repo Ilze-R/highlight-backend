@@ -1,4 +1,4 @@
-package com.ilze.highlight.dao;
+package com.ilze.highlight.repositories;
 
 public interface RoleRepository {
 }

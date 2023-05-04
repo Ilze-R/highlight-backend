@@ -1,29 +1,34 @@
 package com.ilze.highlight.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.ilze.highlight.entity.enums.Role;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-//@Data
+@Data
 @Entity
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
+@Builder
 @Table(name = "users")
 @JsonIdentityInfo(
   generator = ObjectIdGenerators.PropertyGenerator.class,
   property = "id")
-public class User {
+public class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,15 +47,7 @@ public class User {
   @Column(name = "create_time", nullable = false)
   private LocalDateTime createTime;
 
-  @Enumerated(EnumType.STRING)
-  @Column(name = "role", nullable = false)
-  private Role role;
 
-  @Transient
-  private String accessToken;
-
-  @Transient
-  private String refreshToken;
 
 
   @ManyToMany(fetch = FetchType.LAZY,
@@ -65,6 +62,53 @@ public class User {
     inverseJoinColumns = {@JoinColumn(name = "groups_id")})
   private Set<Groups> assignedGroups = new HashSet<>();
 
+  @OneToMany(mappedBy = "user")
+  @JsonIgnoreProperties("user")
+  private List<Token> tokens;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "role", nullable = false)
+  private Role role;
+
+
+  public Role getRole() {
+    return role;
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+  }
+
+  @Override
+  public String getPassword() {
+    return password;
+  }
+
+  @Override
+  public String getUsername() {
+    return email;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 
   public Set<Groups> getGroups(){
     return assignedGroups;
@@ -88,28 +132,4 @@ public class User {
     }
   }
 
-
-
-////UserTry
-//@Entity
-//@Getter
-//@Setter
-//public class User {
-//
-//  @Id
-//  private String userName;
-//  private String userFirstName;
-//  private String userLastName;
-//  private String userPassword;
-//
-//  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//  @JoinTable(name = "USER_ROLE",
-//  joinColumns = {
-//    @JoinColumn(name = "USER_ID")
-//  },
-//  inverseJoinColumns = {
-//    @JoinColumn(name = "ROLE_ID")
-//  })
-//  private Set<Role> role;
-//
 }

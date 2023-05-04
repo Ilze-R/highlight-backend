@@ -1,7 +1,7 @@
 package com.ilze.highlight.service;
 
 import com.ilze.highlight.entity.Groups;
-import com.ilze.highlight.entity.Role;
+import com.ilze.highlight.entity.enums.Role;
 import com.ilze.highlight.entity.User;
 
 import java.util.List;

@@ -1,9 +1,8 @@
 package com.ilze.highlight.controller;
 
-import com.ilze.highlight.dao.UserRepository;
-import com.ilze.highlight.entity.Role;
+import com.ilze.highlight.repositories.UserRepository;
+import com.ilze.highlight.entity.enums.Role;
 import com.ilze.highlight.entity.User;
-import com.ilze.highlight.security.UserPrincipal;
 import com.ilze.highlight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -23,13 +22,13 @@ public class UserController {
   private UserRepository userRepository;
 
 
-  @PutMapping("change/{role}") // api/user/change/{role}
-  public ResponseEntity<?> changeRole(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Role role) {
-
-    userService.changeRole(role, userPrincipal.getUsername());
-
-    return ResponseEntity.ok(true);
-  }
+//  @PutMapping("change/{role}") // api/user/change/{role}
+//  public ResponseEntity<?> changeRole(@AuthenticationPrincipal UserPrincipal userPrincipal, @PathVariable Role role) {
+//
+//    userService.changeRole(role, userPrincipal.getUsername());
+//
+//    return ResponseEntity.ok(true);
+//  }
 
 
   @GetMapping("/{id}") // api/user/4

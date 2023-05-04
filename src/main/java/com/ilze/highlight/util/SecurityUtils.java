@@ -1,9 +1,8 @@
 package com.ilze.highlight.util;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class SecurityUtils {
 

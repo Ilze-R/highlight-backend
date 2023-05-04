@@ -1,9 +1,9 @@
 package com.ilze.highlight.service;
 
-import com.ilze.highlight.dao.GroupsRepository;
-import com.ilze.highlight.dao.UserRepository;
+import com.ilze.highlight.repositories.GroupsRepository;
+import com.ilze.highlight.repositories.UserRepository;
 import com.ilze.highlight.entity.Groups;
-import com.ilze.highlight.entity.Role;
+import com.ilze.highlight.entity.enums.Role;
 import com.ilze.highlight.entity.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
