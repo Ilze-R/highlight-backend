@@ -1,26 +1,22 @@
 package com.ilze.highlight.service;
 
-import com.ilze.highlight.entity.Groups;
-import com.ilze.highlight.entity.enums.Role;
 import com.ilze.highlight.entity.User;
+import com.ilze.highlight.exceptions.UserNotFoundException;
+import com.ilze.highlight.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+@Service
+public class UserService {
 
-public interface UserService {
-  User saveUser(User user);
+  @Autowired
+  UserRepository userRepository;
 
-  Optional<User> findByUsername(String username);
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-  void changeRole(Role newRole, String username);
-
-  List<User> findAllUsers();
-
-  User getUserById(Long id);
-
-  void addUserToGroup(Long usersId, Groups group);
-
-  void deleteUser(Long userId);
-
-  User assignGroupToUser(Long userId, Long groupId);
+  public User findByEmail(String email) {
+    return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+  }
 }

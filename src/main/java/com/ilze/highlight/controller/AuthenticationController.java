@@ -1,14 +1,11 @@
 package com.ilze.highlight.controller;
 
-import com.ilze.highlight.entity.User;
 import com.ilze.highlight.service.AuthenticationService;
 import com.ilze.highlight.service.LogoutService;
-import com.ilze.highlight.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/authentication") //pre-path
+@RequestMapping("/api/authentication")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
