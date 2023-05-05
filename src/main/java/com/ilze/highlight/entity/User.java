@@ -29,7 +29,6 @@ import java.util.Set;
   generator = ObjectIdGenerators.PropertyGenerator.class,
   property = "id")
 public class User implements UserDetails {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
@@ -44,11 +43,15 @@ public class User implements UserDetails {
   @Column(name = "email", nullable = false)
   private String email;
 
-  @Column(name = "create_time", nullable = false)
-  private LocalDateTime createTime;
+//  @Column(name = "create_time", nullable = false)
+//  private LocalDateTime createTime;
 
 
-
+  public User(String username, String password, String email) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+  }
 
   @ManyToMany(fetch = FetchType.LAZY,
     cascade = {
