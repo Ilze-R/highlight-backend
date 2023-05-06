@@ -54,24 +54,4 @@ public class AuthenticationController {
     return ResponseEntity.ok("Logout successful");
   }
 
-//  @PostMapping("sign-up") //api/authentication/sign-up
-//  public ResponseEntity<?> signUp(@RequestBody User user) {
-//
-//    if (userService.findByUsername(user.getUsername()).isPresent()) {
-//      return new ResponseEntity<>(HttpStatus.CONFLICT);
-//    }
-//    return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
-//  }
-//
-//  @PostMapping("sign-in") //api/authentication/sign-in
-//  public ResponseEntity<?> signIn(@RequestBody User user){
-//
-//    return new ResponseEntity<>(authenticationService.signInAndReturnJWT(user), HttpStatus.OK);
-//  }
-//
-//  @PostMapping("refresh-token") // api/authentication/refresh-token?token=
-//  public ResponseEntity<?> refreshToken(@RequestParam String token){
-//
-//    return ResponseEntity.ok(jwtRefreshTokenService.generateAccessTokenFromRefreshToken(token));
-//  }
 }
